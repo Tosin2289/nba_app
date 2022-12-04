@@ -9,7 +9,7 @@ class NewsPage extends StatelessWidget {
   Future getNews() async {
     var url = 'https://nba-latest-news.p.rapidapi.com/news';
     Map<String, String> headers = {
-      'X-RapidAPI-Key': 'b69cb11239mshab2a2abc94c6a70p16a0dbjsna6609ede3bdb',
+      'X-RapidAPI-Key': 'your api key',
       'X-RapidAPI-Host': 'nba-latest-news.p.rapidapi.com'
     };
     var response = await http.get(Uri.parse(url), headers: headers);

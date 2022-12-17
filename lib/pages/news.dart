@@ -1,28 +1,46 @@
 import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
 import 'package:http/http.dart' as http;
 import 'package:nba_app/utils/news_card.dart';
 
-class NewsPage extends StatelessWidget {
+class NewsPage extends StatefulWidget {
   const NewsPage({Key? key}) : super(key: key);
+
+  @override
+  State<NewsPage> createState() => _NewsPageState();
+}
+
+class _NewsPageState extends State<NewsPage> {
   Future getNews() async {
-    var url = 'https://nba-latest-news.p.rapidapi.com/news';
-    Map<String, String> headers = {
-      'X-RapidAPI-Key': 'b69cb11239mshab2a2abc94c6a70p16a0dbjsna6609ede3bdb',
-      'X-RapidAPI-Host': 'nba-latest-news.p.rapidapi.com'
-    };
-    var response = await http.get(Uri.parse(url), headers: headers);
-    var jsonData = jsonDecode(response.body);
-    List<news> LatestNews = [];
-    for (var eachnews in jsonData) {
-      news News = news(
-          title: eachnews['title'],
-          url: eachnews['url'],
-          source: eachnews['source']);
-      LatestNews.add(News);
+    try {
+      var url = 'https://nba-latest-news.p.rapidapi.com/articles';
+      Map<String, String> headers = {
+        'X-RapidAPI-Key': 'b69cb11239mshab2a2abc94c6a70p16a0dbjsna6609ede3bdb',
+        'X-RapidAPI-Host': 'nba-latest-news.p.rapidapi.com'
+      };
+      var response = await http.get(Uri.parse(url), headers: headers);
+      var jsonData = jsonDecode(response.body);
+      List<news> LatestNews = [];
+      for (var eachnews in jsonData) {
+        news News = news(
+            title: eachnews['title'],
+            url: eachnews['url'],
+            source: eachnews['source']);
+        LatestNews.add(News);
+      }
+      return LatestNews;
+    } catch (e) {
+      print(e);
+      showDialog(
+          context: context,
+          builder: (context) {
+            return AlertDialog(
+              content: Text(e.toString()),
+            );
+          });
     }
-    return LatestNews;
   }
 
   @override
@@ -35,7 +53,11 @@ class NewsPage extends StatelessWidget {
           title: Text("News Feed".toUpperCase()),
         ),
         body: RefreshIndicator(
-          onRefresh: getNews,
+          onRefresh: () async {
+            setState(() {
+              getNews();
+            });
+          },
           child: FutureBuilder(
               future: getNews(),
               builder: (context, snapshot) {

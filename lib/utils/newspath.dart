@@ -23,6 +23,13 @@ class _NewsPathState extends State<NewsPath> {
       await launch(url);
     } else
       throw 'cant launch link';
+    showDialog(
+        context: context,
+        builder: ((context) {
+          return AlertDialog(
+            content: Text('error loading news ☹️'),
+          );
+        }));
   }
 
   @override

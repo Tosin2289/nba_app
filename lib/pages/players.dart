@@ -18,23 +18,33 @@ class _PlayersState extends State<Players> {
   final play = TextEditingController();
 
   Future getPlayers() async {
-    var response =
-        await http.get(Uri.https('balldontlie.io', '/api/v1/players'));
-    var jsonData = jsonDecode(response.body);
-    List<players> Players = [];
-    for (var eachplayer in jsonData['data']) {
-      players Player = players(
-          firstname: eachplayer['first_name'],
-          lastname: eachplayer['last_name'],
-          position: eachplayer['position'],
-          height_feet: eachplayer['height_feet'],
-          height_inches: eachplayer['height_inches'],
-          weight: eachplayer['weight_pounds'],
-          team_name: eachplayer['team']['name']);
-      Players.add(Player);
-    }
+    try {
+      var response =
+          await http.get(Uri.https('balldontlie.io', '/api/v1/players'));
+      var jsonData = jsonDecode(response.body);
+      List<players> Players = [];
+      for (var eachplayer in jsonData['data']) {
+        players Player = players(
+            firstname: eachplayer['first_name'],
+            lastname: eachplayer['last_name'],
+            position: eachplayer['position'],
+            height_feet: eachplayer['height_feet'],
+            height_inches: eachplayer['height_inches'],
+            weight: eachplayer['weight_pounds'],
+            team_name: eachplayer['team']['name']);
+        Players.add(Player);
+      }
 
-    return Players;
+      return Players;
+    } catch (e) {
+      showDialog(
+          context: context,
+          builder: ((context) {
+            return AlertDialog(
+              content: Text('Network Error ☹️'),
+            );
+          }));
+    }
   }
 
   @override

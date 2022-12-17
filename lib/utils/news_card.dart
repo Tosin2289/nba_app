@@ -21,7 +21,7 @@ class NewsCard extends StatelessWidget {
           })));
         }),
         child: Container(
-          height: 150,
+          height: 200,
           decoration: BoxDecoration(
               color: Colors.white, borderRadius: BorderRadius.circular(10)),
           child: Padding(

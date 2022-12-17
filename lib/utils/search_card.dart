@@ -26,15 +26,7 @@ class SearchCard extends StatelessWidget {
       child: Container(
         height: 250,
         decoration: BoxDecoration(
-          gradient: LinearGradient(
-            tileMode: TileMode.clamp,
-            begin: Alignment.centerRight,
-            end: Alignment.topLeft,
-            colors: [
-              Color.fromARGB(255, 218, 89, 43),
-              Color.fromARGB(255, 49, 98, 184),
-            ],
-          ),
+          color: Color.fromARGB(255, 172, 142, 10),
           borderRadius: BorderRadius.circular(20),
         ),
         child: Column(

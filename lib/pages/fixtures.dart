@@ -5,33 +5,51 @@ import 'package:lottie/lottie.dart';
 import 'package:nba_app/utils/fixtures_card.dart';
 import 'package:http/http.dart' as http;
 
-class Fixtures extends StatelessWidget {
+class Fixtures extends StatefulWidget {
   const Fixtures({Key? key}) : super(key: key);
+
+  @override
+  State<Fixtures> createState() => _FixturesState();
+}
+
+class _FixturesState extends State<Fixtures> {
   Future getFixtures() async {
-    var url =
-        'https://www.balldontlie.io/api/v1/games?seasons[]=2022&team_ids[]=1';
-    var response = await http.get(Uri.parse(url));
+    try {
+      var url =
+          'https://www.balldontlie.io/api/v1/games?seasons[]=2022&per_page=100&page=1';
+      var response = await http.get(Uri.parse(url));
 
-    var jsonData = json.decode(response.body);
+      var jsonData = json.decode(response.body);
 
-    List<fixture> Fixtures = [];
-    for (var eachfixture in jsonData['data']) {
-      fixture Fixture = fixture(
-          home_team_abbreviation: eachfixture['home_team']['abbreviation'],
-          home_team_name: eachfixture['home_team']['name'],
-          home_team_score: eachfixture['home_team_score'],
-          visitor_team_score: eachfixture['visitor_team_score'],
-          visitor_team_abbreviation: eachfixture['visitor_team']
-              ['abbreviation'],
-          visitor_team_name: eachfixture['visitor_team']['name'],
-          status: eachfixture['status'],
-          date: eachfixture['date'],
-          time: eachfixture['time'],
-          season: eachfixture['season']);
-      Fixtures.add(Fixture);
+      List<fixture> Fixtures = [];
+      for (var eachfixture in jsonData['data']) {
+        fixture Fixture = fixture(
+            home_team_abbreviation: eachfixture['home_team']['abbreviation'],
+            home_team_name: eachfixture['home_team']['name'],
+            home_team_score: eachfixture['home_team_score'],
+            visitor_team_score: eachfixture['visitor_team_score'],
+            visitor_team_abbreviation: eachfixture['visitor_team']
+                ['abbreviation'],
+            visitor_team_name: eachfixture['visitor_team']['name'],
+            status: eachfixture['status'],
+            date: eachfixture['date'],
+            time: eachfixture['time'],
+            season: eachfixture['season']);
+        Fixtures.add(Fixture);
+      }
+
+      return Fixtures;
+    } catch (e) {
+      print(e);
+      showDialog(
+          context: context,
+          builder: ((context) {
+            return AlertDialog(
+              content: Text('Network Error ☹️'),
+            );
+          }));
+      Navigator.pop(context);
     }
-
-    return Fixtures;
   }
 
   @override
@@ -49,7 +67,11 @@ class Fixtures extends StatelessWidget {
                 );
               } else
                 return RefreshIndicator(
-                  onRefresh: getFixtures,
+                  onRefresh: () async {
+                    setState(() {
+                      getFixtures();
+                    });
+                  },
                   child: ListView.builder(
                       itemCount: snapshot.data.length,
                       itemBuilder: ((context, index) {

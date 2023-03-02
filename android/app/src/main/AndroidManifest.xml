@@ -2,9 +2,9 @@
     package="com.example.nba_app">
     <uses-permission android:name='andriod.permission.QUERY_ALL_PACKAGES'/>
    <application
-        android:label="nba_app"
+        android:label="NBA"
         android:name="${applicationName}"
-        android:icon="@mipmap/ic_launcher">
+        android:icon="@mipmap/launcher_icon">
         <activity
             android:name=".MainActivity"
             android:exported="true"

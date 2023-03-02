@@ -16,7 +16,7 @@ class _FixturesState extends State<Fixtures> {
   Future getFixtures() async {
     try {
       var url =
-          'https://www.balldontlie.io/api/v1/games?seasons[]=2022&per_page=100&page=1';
+          'https://www.balldontlie.io/api/v1/games?seasons[]=2022&per_page=100&page=13';
       var response = await http.get(Uri.parse(url));
 
       var jsonData = json.decode(response.body);

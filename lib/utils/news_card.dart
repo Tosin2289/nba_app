@@ -21,7 +21,7 @@ class NewsCard extends StatelessWidget {
           })));
         }),
         child: Container(
-          height: 200,
+          height: 150,
           decoration: BoxDecoration(
               color: Colors.white, borderRadius: BorderRadius.circular(10)),
           child: Padding(
@@ -51,6 +51,7 @@ class NewsCard extends StatelessWidget {
                 Container(
                   child: Text(
                     title,
+                    overflow: TextOverflow.ellipsis,
                     style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
                   ),
                 ),

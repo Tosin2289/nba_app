@@ -43,43 +43,47 @@ class _MyHomePageState extends State<MyHomePage> {
     return Scaffold(
       backgroundColor: Colors.black,
       body: SafeArea(
-        child: FutureBuilder(
-          future: getTeams(),
-          builder: ((context, snapshot) {
-            if (snapshot.data == null) {
-              return Container(
-                child: Center(child: Lottie.asset('assets/basketloading.json')),
-              );
-            } else
-              return RefreshIndicator(
-                onRefresh: getTeams,
-                child: ListView.builder(
-                    itemCount: snapshot.data.length,
-                    itemBuilder: ((context, index) {
-                      return Padding(
-                        padding: const EdgeInsets.symmetric(
-                            horizontal: 12.0, vertical: 12),
-                        child: Container(
-                          decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(10),
-                              color: Colors.white),
-                          child: ListTile(
-                            leading: Text(
-                              snapshot.data[index].abbreviation,
-                              style: TextStyle(fontWeight: FontWeight.bold),
+        child: Padding(
+          padding: const EdgeInsets.all(12.0),
+          child: FutureBuilder(
+            future: getTeams(),
+            builder: ((context, snapshot) {
+              if (snapshot.data == null) {
+                return Container(
+                  child:
+                      Center(child: Lottie.asset('assets/basketloading.json')),
+                );
+              } else
+                return RefreshIndicator(
+                  onRefresh: getTeams,
+                  child: ListView.builder(
+                      itemCount: snapshot.data.length,
+                      itemBuilder: ((context, index) {
+                        return Padding(
+                          padding: const EdgeInsets.symmetric(
+                              horizontal: 12.0, vertical: 12),
+                          child: Container(
+                            decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(10),
+                                color: Colors.white),
+                            child: ListTile(
+                              leading: Text(
+                                snapshot.data[index].abbreviation,
+                                style: TextStyle(fontWeight: FontWeight.bold),
+                              ),
+                              title: Text(
+                                snapshot.data[index].name,
+                                style: TextStyle(fontWeight: FontWeight.bold),
+                              ),
+                              subtitle: Text(snapshot.data[index].division),
+                              trailing: Text(snapshot.data[index].city),
                             ),
-                            title: Text(
-                              snapshot.data[index].name,
-                              style: TextStyle(fontWeight: FontWeight.bold),
-                            ),
-                            subtitle: Text(snapshot.data[index].division),
-                            trailing: Text(snapshot.data[index].city),
                           ),
-                        ),
-                      );
-                    })),
-              );
-          }),
+                        );
+                      })),
+                );
+            }),
+          ),
         ),
       ),
     );

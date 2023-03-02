@@ -57,43 +57,47 @@ class _FixturesState extends State<Fixtures> {
     return Scaffold(
         backgroundColor: Colors.black,
         body: SafeArea(
-          child: FutureBuilder(
-            future: getFixtures(),
-            builder: (context, snapshot) {
-              if (snapshot.data == null) {
-                return Container(
-                  child:
-                      Center(child: Lottie.asset('assets/basketloading.json')),
-                );
-              } else
-                return RefreshIndicator(
-                  onRefresh: () async {
-                    setState(() {
-                      getFixtures();
-                    });
-                  },
-                  child: ListView.builder(
-                      itemCount: snapshot.data.length,
-                      itemBuilder: ((context, index) {
-                        return FixturesCard(
-                            season: snapshot.data[index].season,
-                            home_team_abbreviation:
-                                snapshot.data[index].home_team_abbreviation,
-                            home_team_name: snapshot.data[index].home_team_name,
-                            home_team_score:
-                                snapshot.data[index].home_team_score,
-                            visitor_team_score:
-                                snapshot.data[index].visitor_team_score,
-                            visitor_team_abbreviation:
-                                snapshot.data[index].visitor_team_abbreviation,
-                            visitor_team_name:
-                                snapshot.data[index].visitor_team_name,
-                            status: snapshot.data[index].status,
-                            date: snapshot.data[index].date,
-                            time: snapshot.data[index].time);
-                      })),
-                );
-            },
+          child: Padding(
+            padding: const EdgeInsets.all(12.0),
+            child: FutureBuilder(
+              future: getFixtures(),
+              builder: (context, snapshot) {
+                if (snapshot.data == null) {
+                  return Container(
+                    child: Center(
+                        child: Lottie.asset('assets/basketloading.json')),
+                  );
+                } else
+                  return RefreshIndicator(
+                    onRefresh: () async {
+                      setState(() {
+                        getFixtures();
+                      });
+                    },
+                    child: ListView.builder(
+                        itemCount: snapshot.data.length,
+                        itemBuilder: ((context, index) {
+                          return FixturesCard(
+                              season: snapshot.data[index].season,
+                              home_team_abbreviation:
+                                  snapshot.data[index].home_team_abbreviation,
+                              home_team_name:
+                                  snapshot.data[index].home_team_name,
+                              home_team_score:
+                                  snapshot.data[index].home_team_score,
+                              visitor_team_score:
+                                  snapshot.data[index].visitor_team_score,
+                              visitor_team_abbreviation: snapshot
+                                  .data[index].visitor_team_abbreviation,
+                              visitor_team_name:
+                                  snapshot.data[index].visitor_team_name,
+                              status: snapshot.data[index].status,
+                              date: snapshot.data[index].date,
+                              time: snapshot.data[index].time);
+                        })),
+                  );
+              },
+            ),
           ),
         ));
   }

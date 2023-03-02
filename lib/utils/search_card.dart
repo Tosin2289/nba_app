@@ -26,7 +26,7 @@ class SearchCard extends StatelessWidget {
       child: Container(
         height: 250,
         decoration: BoxDecoration(
-          color: Color.fromARGB(255, 172, 142, 10),
+          color: Colors.brown,
           borderRadius: BorderRadius.circular(20),
         ),
         child: Column(

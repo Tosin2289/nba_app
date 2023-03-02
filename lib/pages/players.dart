@@ -93,31 +93,34 @@ class _PlayersState extends State<Players> {
       ),
       backgroundColor: Colors.black,
       body: SafeArea(
-          child: FutureBuilder(
-              future: getPlayers(),
-              builder: ((context, snapshot) {
-                if (snapshot.data == null) {
-                  return Container(
-                    child: Center(
-                        child: Lottie.asset('assets/basketloading.json')),
-                  );
-                } else
-                  return RefreshIndicator(
-                    onRefresh: getPlayers,
-                    child: ListView.builder(
-                        itemCount: snapshot.data.length,
-                        itemBuilder: ((context, index) {
-                          return SearchCard(
-                              firstname: snapshot.data[index].firstname,
-                              lastname: snapshot.data[index].lastname,
-                              position: snapshot.data[index].position,
-                              height_feet: snapshot.data[index].height_feet,
-                              height_inches: snapshot.data[index].height_inches,
-                              weight: snapshot.data[index].weight,
-                              team_name: snapshot.data[index].team_name);
-                        })),
-                  );
-              }))),
+          child: Padding(
+        padding: const EdgeInsets.all(12.0),
+        child: FutureBuilder(
+            future: getPlayers(),
+            builder: ((context, snapshot) {
+              if (snapshot.data == null) {
+                return Container(
+                  child:
+                      Center(child: Lottie.asset('assets/basketloading.json')),
+                );
+              } else
+                return RefreshIndicator(
+                  onRefresh: getPlayers,
+                  child: ListView.builder(
+                      itemCount: snapshot.data.length,
+                      itemBuilder: ((context, index) {
+                        return SearchCard(
+                            firstname: snapshot.data[index].firstname,
+                            lastname: snapshot.data[index].lastname,
+                            position: snapshot.data[index].position,
+                            height_feet: snapshot.data[index].height_feet,
+                            height_inches: snapshot.data[index].height_inches,
+                            weight: snapshot.data[index].weight,
+                            team_name: snapshot.data[index].team_name);
+                      })),
+                );
+            })),
+      )),
     );
   }
 }

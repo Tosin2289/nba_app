@@ -30,11 +30,26 @@ class _SplashState extends State<Splash> {
       backgroundColor: Colors.black,
       body: Center(
           child: Column(
-        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        mainAxisAlignment: MainAxisAlignment.spaceAround,
         children: [
+          SizedBox(),
           Lottie.asset(
             'assets/splashlogo.json',
             fit: BoxFit.cover,
+          ),
+          ShaderMask(
+            shaderCallback: (bounds) =>
+                const LinearGradient(colors: [Colors.red, Colors.blue])
+                    .createShader(
+              Rect.fromLTWH(0, 0, bounds.width, bounds.height),
+            ),
+            child: Text(
+              "Made By Phenomes",
+              style: TextStyle(
+                  fontSize: 28,
+                  color: Colors.white,
+                  fontWeight: FontWeight.bold),
+            ),
           ),
         ],
       )),

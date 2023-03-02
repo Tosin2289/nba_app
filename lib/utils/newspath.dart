@@ -43,6 +43,25 @@ class _NewsPathState extends State<NewsPath> {
         padding: const EdgeInsets.all(8.0),
         child: Column(
           children: [
+            Row(
+              children: [
+                Container(
+                  height: 30,
+                  width: 100,
+                  decoration: BoxDecoration(
+                    color: Colors.red,
+                    borderRadius: BorderRadius.circular(10),
+                  ),
+                  child: Center(
+                    child: Text(
+                      widget.source,
+                      style: TextStyle(
+                          fontWeight: FontWeight.bold, color: Colors.white),
+                    ),
+                  ),
+                ),
+              ],
+            ),
             Text(
               widget.title,
               style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),

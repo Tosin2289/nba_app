@@ -58,24 +58,27 @@ class _NewsPageState extends State<NewsPage> {
               getNews();
             });
           },
-          child: FutureBuilder(
-              future: getNews(),
-              builder: (context, snapshot) {
-                if (snapshot.data == null) {
-                  return Container(
-                    child: Center(
-                        child: Lottie.asset('assets/basketloading.json')),
-                  );
-                } else
-                  return ListView.builder(
-                      itemCount: snapshot.data.length,
-                      itemBuilder: ((context, index) {
-                        return NewsCard(
-                            url: snapshot.data[index].url,
-                            source: snapshot.data[index].source,
-                            title: snapshot.data[index].title);
-                      }));
-              }),
+          child: Padding(
+            padding: const EdgeInsets.all(12.0),
+            child: FutureBuilder(
+                future: getNews(),
+                builder: (context, snapshot) {
+                  if (snapshot.data == null) {
+                    return Container(
+                      child: Center(
+                          child: Lottie.asset('assets/basketloading.json')),
+                    );
+                  } else
+                    return ListView.builder(
+                        itemCount: snapshot.data.length,
+                        itemBuilder: ((context, index) {
+                          return NewsCard(
+                              url: snapshot.data[index].url,
+                              source: snapshot.data[index].source,
+                              title: snapshot.data[index].title);
+                        }));
+                }),
+          ),
         ));
   }
 }
